@@ -40,22 +40,33 @@ input, select { padding:10px; margin:5px; border-radius:10px; border:none; font-
 #site-header a:hover { color:#0ff; }
 #site-header button:hover { background:#0cc; }
 
-/* Robot Logo CSS */
-#robot-logo { display:inline-block; margin-right:10px; vertical-align:middle; }
-#robot-logo .antenna { width:4px; height:10px; background:#0ff; display:inline-block; margin:0 2px; border-radius:2px; }
+/* Robot Logo CSS & Animation */
+#robot-logo { display:inline-block; margin-right:10px; vertical-align:middle; animation:body-bounce 2s infinite ease-in-out; }
+#robot-logo .antenna, #robot-logo .head, #robot-logo .body { opacity:0; transform:translateY(-50px); transition:0.8s ease-out; transform-origin:center bottom; }
+#robot-logo .antenna { width:4px; height:10px; background:#0ff; display:inline-block; margin:0 2px; border-radius:2px; animation:antenna-wiggle 2s infinite ease-in-out; }
 #robot-logo .head { width:30px; height:30px; background:#111; border:2px solid #0ff; border-radius:6px; position:relative; margin:0 auto; }
-#robot-logo .head .eyes { width:5px; height:5px; background:#0ff; border-radius:50%; display:inline-block; position:absolute; top:10px; left:7px; }
+#robot-logo .head .eyes { width:5px; height:5px; background:#0ff; border-radius:50%; display:inline-block; position:absolute; top:10px; transition:0.1s linear; }
 #robot-logo .head .eyes.right { left:18px; }
 #robot-logo .body { width:30px; height:25px; background:#111; border:2px solid #0ff; border-radius:5px; margin:2px auto; position:relative; }
 #robot-logo .blue-b { color:#0ff; font-weight:bold; font-family:sans-serif; font-size:16px; position:absolute; top:4px; left:7px; }
+
+@keyframes antenna-wiggle {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(5deg); }
+}
+@keyframes body-bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
 </style>
 </head>
 <body>
 
-<!-- Header with Robot Logo -->
+<!-- Header with Animated Robot Logo -->
 <header id="site-header">
   <div style="display:flex; align-items:center;">
-    <!-- Robot Logo -->
     <div id="robot-logo">
       <div class="antenna left"></div>
       <div class="antenna right"></div>
@@ -67,7 +78,6 @@ input, select { padding:10px; margin:5px; border-radius:10px; border:none; font-
         <span class="blue-b">B</span>
       </div>
     </div>
-    <!-- Site Name -->
     <div id="logo" style="font-family:'Montserrat',sans-serif; font-size:1.8rem; color:#0ff; margin-left:5px;">B.E.R.B</div>
   </div>
   <nav>
@@ -75,9 +85,7 @@ input, select { padding:10px; margin:5px; border-radius:10px; border:none; font-
     <a href="#results">Features</a>
     <a href="#tiers">Pricing</a>
     <a href="#examples">Examples</a>
-    <a href="#tiers">
-      <button>Start Free Trial</button>
-    </a>
+    <a href="#tiers"><button>Start Free Trial</button></a>
   </nav>
 </header>
 
@@ -100,7 +108,6 @@ input, select { padding:10px; margin:5px; border-radius:10px; border:none; font-
 
 <h2>Recent Products</h2>
 <div id="recent-products"></div>
-
 <div id="results"></div>
 
 <h2>Example Products</h2>
@@ -146,6 +153,27 @@ input, select { padding:10px; margin:5px; border-radius:10px; border:none; font-
 
 <script>
 let recentProducts = [];
+// Self-construct animation
+window.addEventListener("load", ()=>{
+  const parts = document.querySelectorAll("#robot-logo .antenna, #robot-logo .head, #robot-logo .body");
+  parts.forEach((el,i)=>{ setTimeout(()=>{ el.style.opacity=1; el.style.transform="translateY(0)"; }, i*300); });
+});
+
+// Eye tracking
+document.addEventListener("mousemove", e=>{
+  const eyes = document.querySelectorAll("#robot-logo .eyes");
+  eyes.forEach(eye=>{
+    const rect = eye.getBoundingClientRect();
+    const eyeX = rect.left + rect.width/2;
+    const eyeY = rect.top + rect.height/2;
+    const dx = e.clientX - eyeX;
+    const dy = e.clientY - eyeY;
+    const angle = Math.atan2(dy, dx);
+    const radius = 3;
+    eye.style.transform = `translate(${Math.cos(angle)*radius}px, ${Math.sin(angle)*radius}px)`;
+  });
+});
+
 function analyzeProduct(){
   const name = document.getElementById('productName').value || "Product";
   const cost = parseFloat(document.getElementById('cost').value) || 0;
@@ -187,5 +215,7 @@ function copyResult(name, profit, margin, daily, monthly, yearly){
 }
 </script>
 
+</body>
+</html>
 </body>
 </html>
