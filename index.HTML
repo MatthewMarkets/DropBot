@@ -10,13 +10,12 @@
   p, li { font-size:1rem; color:#ccc; max-width:800px; margin:10px auto; line-height:1.6;}
   button { background:#0ff; color:#000; border:none; padding:12px 25px; font-size:1rem; margin:10px; border-radius:25px; cursor:pointer; transition:0.2s;}
   button:hover { background:#0cc;}
-  input { padding:10px; margin:5px; border-radius:10px; border:none; font-size:1rem; width:150px; text-align:center;}
+  input, select { padding:10px; margin:5px; border-radius:10px; border:none; font-size:1rem; width:150px; text-align:center;}
   #app { margin-top:50px;}
   #results { display:flex; flex-wrap:wrap; justify-content:center; margin-top:30px;}
   .result-card { background:#111; border-radius:15px; padding:20px; margin:10px; min-width:250px; transition:0.3s; }
   .result-card:hover { transform:scale(1.05);}
   .high { color:#0f0; } .medium { color:#ff0; } .low { color:#f00; }
-  #tiers { margin:50px 20px; color:#aaa; line-height:1.7;}
   .product-card { background:#111; border-radius:15px; padding:15px; margin:10px; display:inline-block; width:250px;}
   .testimonial { background:#111; border-radius:15px; padding:15px; margin:10px auto; max-width:600px;}
   #recent-products { margin-top:20px; text-align:left; max-width:800px; margin-left:auto; margin-right:auto;}
@@ -24,13 +23,29 @@
   .tooltip { position:relative; display:inline-block; cursor:pointer; }
   .tooltip .tooltiptext { visibility:hidden; width:180px; background-color:#222; color:#fff; text-align:center; padding:5px; border-radius:6px; position:absolute; z-index:1; bottom:125%; left:50%; margin-left:-90px; opacity:0; transition:opacity 0.3s;}
   .tooltip:hover .tooltiptext { visibility:visible; opacity:1;}
+
+  /* Tier card styles (Shopify-style) */
+  #tiers { display:flex; justify-content:center; gap:20px; margin:50px 0; flex-wrap:wrap;}
+  .tier-card {
+    background:#111;
+    border:2px solid #0ff;
+    border-radius:10px;
+    padding:20px;
+    width:220px;
+    text-align:center;
+    transition:0.3s;
+  }
+  .tier-card:hover { transform:scale(1.05); border-color:#0cc; }
+  .tier-card h3 { color:#0ff; margin-bottom:10px; }
+  .tier-card p { color:#ccc; margin:5px 0; }
+  .tier-card button { background:#0ff; color:#000; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; margin-top:10px; transition:0.2s; }
+  .tier-card button:hover { background:#0cc; }
 </style>
 </head>
 <body>
 
 <h1>B.E.R.B — Your Free AI Dropshipping Assistant</h1>
 <p>Analyze products, simulate profits, and see full revenue predictions instantly. Start your <strong>1-week free trial</strong> today!</p>
-<button onclick="startTrial()">Start 1-Week Free Trial</button>
 
 <div id="app">
   <input type="text" id="productName" placeholder="Product Name or URL">
@@ -74,10 +89,22 @@
 <div class="testimonial">“B.E.R.B helped me discover 12 high-margin products in my first week! — Alex D.”</div>
 <div class="testimonial">“Finally, an AI tool that actually predicts real profits. — Mia T.”</div>
 
+<h2>Choose Your Tier</h2>
 <div id="tiers">
-<p>
-B.E.R.B is your AI-powered dropshipping assistant. <strong>Tier 1 (T1)</strong> offers a 1-week free trial and up to 50 product analyses with profit, margin, and revenue predictions. <strong>Tier 2 (T2)</strong> unlocks unlimited analyses, competitor insights, whiff-product detection, and AI suggestions. Fast, low-cost, and smarter than other tools — get actionable results instantly and grow your business with confidence.
-</p>
+  <div class="tier-card">
+    <h3>Tier 1 - Starter</h3>
+    <p>1-week Free Trial</p>
+    <p>$5 / month after trial</p>
+    <p>Up to 50 product analyses</p>
+    <button onclick="startTrial()">Select Tier 1</button>
+  </div>
+  <div class="tier-card">
+    <h3>Tier 2 - Pro</h3>
+    <p>Unlimited analyses</p>
+    <p>$15 / month</p>
+    <p>Full AI tips & competitor insights</p>
+    <button onclick="alert('Upgrade coming soon!')">Select Tier 2</button>
+  </div>
 </div>
 
 <script>
