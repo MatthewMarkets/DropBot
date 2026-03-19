@@ -14,8 +14,38 @@ body {
   text-align:center;
 }
 
+/* HEADER */
+#header {
+  display:flex;
+  justify-content:space-between;
+  padding:15px 30px;
+  background:#111;
+  border-bottom:2px solid #0ff;
+}
+
+#logo {
+  color:#0ff;
+  font-size:22px;
+  font-weight:bold;
+}
+
+nav a {
+  margin:0 10px;
+  color:#ccc;
+  text-decoration:none;
+}
+
+nav button {
+  background:#0ff;
+  border:none;
+  padding:8px 15px;
+  border-radius:6px;
+}
+
+/* HERO */
 h1 { color:#0ff; margin-top:40px; }
 
+/* INPUTS */
 input, select {
   padding:10px;
   margin:5px;
@@ -31,6 +61,7 @@ button {
   cursor:pointer;
 }
 
+/* RESULTS */
 #results {
   margin-top:40px;
   display:flex;
@@ -53,7 +84,6 @@ button {
 
 .stat {
   margin:8px 0;
-  font-size:16px;
 }
 
 .good { color:#0f0; }
@@ -61,7 +91,6 @@ button {
 .bad { color:#f00; }
 
 .loading {
-  font-size:18px;
   color:#0ff;
   animation: blink 1s infinite;
 }
@@ -69,35 +98,78 @@ button {
 @keyframes blink {
   50% { opacity:0.3; }
 }
+
+/* TIERS */
+#tiers {
+  margin-top:60px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.tier {
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  width:200px;
+  border:1px solid #0ff;
+}
 </style>
 </head>
 
 <body>
 
-<h1>B.E.R.B AI Product Analyzer</h1>
+<!-- HEADER -->
+<div id="header">
+  <div id="logo">B.E.R.B</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Features</a>
+    <a href="#">Pricing</a>
+    <button>Start Free Trial</button>
+  </nav>
+</div>
 
-<input type="text" id="productName" placeholder="Paste Product URL or Name">
-<br>
-<input type="number" id="cost" placeholder="Cost ($)">
-<input type="number" id="shipping" placeholder="Shipping ($)">
-<input type="number" id="ads" placeholder="Ads ($)">
-<br>
-<select id="category">
-  <option value="general">General</option>
-  <option value="electronics">Electronics</option>
-  <option value="fashion">Fashion</option>
-</select>
+<h1>Find Winning Products with AI</h1>
 
-<br><br>
-<button onclick="analyzeProduct()">Analyze</button>
+<!-- ANALYZER -->
+<div>
+  <input type="text" id="productName" placeholder="Paste Product URL or Name"><br>
+  <input type="number" id="cost" placeholder="Cost">
+  <input type="number" id="shipping" placeholder="Shipping">
+  <input type="number" id="ads" placeholder="Ads"><br>
+  <select id="category">
+    <option>General</option>
+    <option>Electronics</option>
+    <option>Fashion</option>
+  </select><br><br>
+
+  <button onclick="analyzeProduct()">Analyze Product</button>
+</div>
 
 <div id="results"></div>
+
+<!-- TIERS -->
+<div id="tiers">
+  <div class="tier">
+    <h3>Starter</h3>
+    <p>1 Week Free Trial</p>
+    <p>$5/month</p>
+    <button>Start</button>
+  </div>
+
+  <div class="tier">
+    <h3>Pro</h3>
+    <p>Unlimited Analysis</p>
+    <p>$15/month</p>
+    <button>Upgrade</button>
+  </div>
+</div>
 
 <script>
 function analyzeProduct(){
   let rawInput = document.getElementById('productName').value || "Product";
 
-  // Clean URL
   let name = rawInput;
   if(rawInput.includes("http")){
     try {
@@ -113,7 +185,7 @@ function analyzeProduct(){
   const ads = parseFloat(document.getElementById('ads').value) || 5;
 
   document.getElementById('results').innerHTML =
-    `<div class="loading">🤖 BERB is analyzing product...</div>`;
+    `<div class="loading">🤖 BERB analyzing...</div>`;
 
   setTimeout(()=>{
 
@@ -125,40 +197,39 @@ function analyzeProduct(){
     const monthly = daily * 30;
     const yearly = daily * 365;
 
-    let colorClass = "bad";
-    if(margin > 50) colorClass = "good";
-    else if(margin > 30) colorClass = "mid";
+    let color = "bad";
+    if(margin > 50) color = "good";
+    else if(margin > 30) color = "mid";
 
     document.getElementById('results').innerHTML = `
       <div class="result-box">
         <h2>${name}</h2>
 
-        <div class="big">$${profit.toFixed(2)} profit per sale</div>
+        <div class="big">$${profit.toFixed(2)} / sale</div>
 
-        <div class="stat ${colorClass}">
+        <div class="stat ${color}">
           Margin: ${margin.toFixed(1)}%
         </div>
 
-        <hr style="border-color:#222; margin:15px 0;">
+        <hr style="border-color:#222;">
 
-        <div class="stat">📅 Daily: $${daily.toFixed(2)}</div>
-        <div class="stat">📆 Monthly: $${monthly.toFixed(2)}</div>
-        <div class="stat">📈 Yearly: $${yearly.toFixed(2)}</div>
+        <div class="stat">Daily: $${daily.toFixed(2)}</div>
+        <div class="stat">Monthly: $${monthly.toFixed(2)}</div>
+        <div class="stat">Yearly: $${yearly.toFixed(2)}</div>
 
-        <hr style="border-color:#222; margin:15px 0;">
+        <hr style="border-color:#222;">
 
-        <div class="stat">💡 Suggested Price: $${price.toFixed(2)}</div>
+        <div class="stat">Suggested Price: $${price.toFixed(2)}</div>
 
         <div class="stat">
           ${margin > 50 ? "🔥 Winning Product" :
-            margin > 30 ? "⚠️ Decent Product" :
-            "❌ Low Potential"}
+            margin > 30 ? "⚠️ Decent" :
+            "❌ Weak"}
         </div>
       </div>
     `;
 
-  }, 1200); // fake AI delay
-
+  }, 1000);
 }
 </script>
 
