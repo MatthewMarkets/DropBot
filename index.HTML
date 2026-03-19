@@ -1,0 +1,144 @@
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B.E.R.B - AI Dropshipping Analyzer</title>
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-top: 50px;
+      color: #0ff; /* subtle techy accent */
+    }
+
+    p, li {
+      font-size: 1rem;
+      color: #ccc;
+      max-width: 800px;
+      margin: 10px auto;
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    button {
+      background-color: #0ff;
+      color: #000;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      margin: 15px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #0cc;
+    }
+
+    /* Input fields */
+    input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      width: 150px;
+      text-align: center;
+    }
+
+    /* Calculator and results */
+    #app {
+      margin-top: 50px;
+    }
+
+    #result {
+      margin-top: 20px;
+      background-color: #111;
+      padding: 20px;
+      border-radius: 15px;
+      display: inline-block;
+      min-width: 300px;
+    }
+
+    /* Tier paragraph */
+    #tiers {
+      margin: 50px 20px;
+      color: #aaa;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <h1>Meet B.E.R.B — Your AI Dropshipping Analyst</h1>
+  <p>Instantly calculate profits, margins, and revenue for any product. Start with a 1-week free trial of Tier 1 and see how much smarter your dropshipping business can be.</p>
+  <button onclick="startTrial()">Start 1-Week Free Trial</button>
+
+  <!-- Calculator Section -->
+  <div id="app">
+    <input type="number" id="cost" placeholder="Product Cost ($)">
+    <input type="number" id="shipping" placeholder="Shipping ($)">
+    <input type="number" id="ads" placeholder="Ad Spend ($)">
+    <button onclick="calculateProfit()">Analyze Product</button>
+
+    <div id="result">
+      <p><strong>Suggested Price:</strong> $0.00</p>
+      <p><strong>Profit:</strong> $0.00</p>
+      <p><strong>Profit Margin:</strong> 0%</p>
+      <p><strong>Estimated Revenue:</strong></p>
+      <p>Daily: $0.00 | Monthly: $0.00 | Yearly: $0.00</p>
+    </div>
+  </div>
+
+  <!-- Tiers & Perks -->
+  <div id="tiers">
+    <p>
+      B.E.R.B is the ultimate AI-powered dropshipping assistant designed to save you time, maximize your profits, and make smarter product decisions faster than any other tool on the market. With our <strong>Tier 1 (T1) Starter Plan</strong>, you get a full 1-week free trial, allowing you to run up to 50 product analyses, instantly calculating profits, margins, and daily, monthly, and yearly revenue estimates. T1 is perfect for beginners or those testing new products, giving you actionable insights at <strong>just $5/month</strong> once your trial ends. For more advanced users, our <strong>Tier 2 (T2) Pro Plan</strong> offers unlimited analyses, full AI product scraping, legitimacy checks, whiff-product detection, and smarter selling price suggestions — giving you a competitive edge over your rivals. Unlike other dropshipping tools that charge high prices or make you wait days for results, B.E.R.B provides <strong>faster calculations, smarter insights, and lower costs</strong>, so you can make confident business decisions and grow your dropshipping store without unnecessary overhead. Whether you’re just starting or scaling your business, B.E.R.B makes it simple, fast, and affordable to analyze any product and know exactly what you’ll earn — giving you an unfair advantage in the market.
+    </p>
+  </div>
+
+  <script>
+    // Free trial CTA simulation
+    function startTrial() {
+      alert("1-week free trial activated! Enjoy Tier 1 access.");
+    }
+
+    // Simulated B.E.R.B analysis
+    function calculateProfit() {
+      const cost = parseFloat(document.getElementById('cost').value) || 0;
+      const shipping = parseFloat(document.getElementById('shipping').value) || 0;
+      const ads = parseFloat(document.getElementById('ads').value) || 0;
+
+      // Placeholder AI logic
+      const suggestedPrice = (cost + shipping + ads) * 2;
+      const profit = suggestedPrice - cost - shipping - ads;
+      const margin = (profit / suggestedPrice) * 100;
+
+      const dailySales = 5; // Default for MVP
+      const dailyRevenue = profit * dailySales;
+      const monthlyRevenue = dailyRevenue * 30;
+      const yearlyRevenue = dailyRevenue * 365;
+
+      document.getElementById('result').innerHTML = `
+        <p><strong>Suggested Price:</strong> $${suggestedPrice.toFixed(2)}</p>
+        <p><strong>Profit:</strong> $${profit.toFixed(2)}</p>
+        <p><strong>Profit Margin:</strong> ${margin.toFixed(1)}%</p>
+        <p><strong>Estimated Revenue:</strong></p>
+        <p>Daily: $${dailyRevenue.toFixed(2)} | Monthly: $${monthlyRevenue.toFixed(2)} | Yearly: $${yearlyRevenue.toFixed(2)}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
